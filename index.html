@@ -78,6 +78,35 @@
 <!-- tall spacer: scrolling through it drives the video playback -->
 <div class="scroll-space" aria-hidden="true"></div>
 
+<!-- Follow gate modal -->
+<div class="modal" id="gateModal" hidden>
+  <div class="modal-card">
+    <button class="modal-x" id="gateClose" aria-label="Close">&times;</button>
+    <h2>Support the project</h2>
+    <p class="modal-sub">This addon is free. Follow my channels to unlock the download — it takes 10 seconds and helps me keep making Blender tools.</p>
+
+    <div class="follow-list">
+      <a class="follow-card yt" id="followYt" href="https://www.youtube.com/@arsalanasghary-mg2uo" target="_blank" rel="noopener noreferrer">
+        <span class="fc-ico">▶</span>
+        <span class="fc-txt"><b>YouTube</b><small>@arsalanasghary-mg2uo</small></span>
+        <span class="fc-state" id="stateYt">Follow</span>
+      </a>
+      <a class="follow-card ig" id="followIg" href="https://www.instagram.com/arsalanasghary8" target="_blank" rel="noopener noreferrer">
+        <span class="fc-ico">◎</span>
+        <span class="fc-txt"><b>Instagram</b><small>@arsalanasghary8</small></span>
+        <span class="fc-state" id="stateIg">Follow</span>
+      </a>
+    </div>
+
+    <a class="modal-dl" id="modalDownload" href="download/tut_bend_effect.zip" download="tut_bend_effect.zip">
+      <span class="dl-glyph">⬇</span>
+      <span class="dl-label">Download Addon</span>
+      <span class="dl-sub" id="modalDlSub">Follow both channels to unlock</span>
+    </a>
+    <p class="modal-note" id="gateNote">0 of 2 done</p>
+  </div>
+</div>
+
 <script src="script.js"></script>
 </body>
 </html>

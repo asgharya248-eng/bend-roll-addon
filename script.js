@@ -107,3 +107,65 @@ async function preload() {
 }
 preload().then(onScroll);
 window.addEventListener("resize", onScroll);
+
+/* ---------- follow gate: unlock download only after both channels are opened ---------- */
+(function () {
+  const dlBehind = document.getElementById("dlBehind");
+  const modal = document.getElementById("gateModal");
+  const closeBtn = document.getElementById("gateClose");
+  const yt = document.getElementById("followYt");
+  const ig = document.getElementById("followIg");
+  const modalDl = document.getElementById("modalDownload");
+  const note = document.getElementById("gateNote");
+  const dlSub = document.getElementById("modalDlSub");
+
+  const state = { yt: false, ig: false };
+
+  // key used to remember the user already unlocked it (same browser)
+  const STORAGE_KEY = "tutbend.followed";
+
+  function refresh() {
+    const done = state.yt && state.ig;
+    document.getElementById("stateYt").textContent = state.yt ? "Following" : "Follow";
+    document.getElementById("stateIg").textContent = state.ig ? "Following" : "Follow";
+    yt.classList.toggle("done", state.yt);
+    ig.classList.toggle("done", state.ig);
+    modalDl.classList.toggle("unlocked", done);
+    const n = (state.yt ? 1 : 0) + (state.ig ? 1 : 0);
+    note.textContent = done ? "Unlocked — thank you!" : n + " of 2 done";
+    note.classList.toggle("ready", done);
+    dlSub.textContent = done ? "tut_bend_effect.zip · 133 KB · Blender 5.2+" : "Follow both channels to unlock";
+    if (done) {
+      try { localStorage.setItem(STORAGE_KEY, "1"); } catch (e) {}
+    }
+    return done;
+  }
+
+  function openGate(e) {
+    // allow direct download if already unlocked before
+    let already = false;
+    try { already = localStorage.getItem(STORAGE_KEY) === "1"; } catch (e) {}
+    if (already) return; // let the anchor download normally
+    if (e) e.preventDefault();
+    modal.hidden = false;
+    refresh();
+  }
+
+  function closeGate() { modal.hidden = true; }
+
+  dlBehind.addEventListener("click", openGate);
+  closeBtn.addEventListener("click", closeGate);
+  modal.addEventListener("click", (e) => { if (e.target === modal) closeGate(); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeGate(); });
+
+  yt.addEventListener("click", () => { state.yt = true; refresh(); });
+  ig.addEventListener("click", () => { state.ig = true; refresh(); });
+
+  // when unlocked inside the modal, allow the real download and close
+  modalDl.addEventListener("click", (e) => {
+    if (!state.yt || !state.ig) { e.preventDefault(); return; } // still locked, block download
+    closeGate();
+    // after unlocking once, the behind-canvas button downloads directly
+    try { localStorage.setItem(STORAGE_KEY, "1"); } catch (e) {}
+  });
+})();
