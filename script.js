@@ -9,6 +9,8 @@ const DIR = "frames/";
 const EXT = ".webp";
 const ALPHA_START = 181;               // first frame with transparency
 const REVEAL = (ALPHA_START - FIRST) / (TOTAL - 1); // scroll progress where alpha begins
+const DESC_END_FRAME = 188;            // description panel fully gone from here on
+const DESC_END = (DESC_END_FRAME - FIRST) / (TOTAL - 1); // ~0.87
 
 const canvas = document.getElementById("frameCanvas");
 const ctx = canvas.getContext("2d");
@@ -16,6 +18,7 @@ const stage = document.getElementById("stage");
 const hint = document.getElementById("scrollHint");
 const bar = document.getElementById("progressBar");
 const dlBehind = document.getElementById("dlBehind");
+const descPanel = document.getElementById("descPanel");
 
 const cache = new Map();
 let current = -1;
@@ -74,6 +77,22 @@ function onScroll() {
     dlBehind.classList.toggle("ready", shown);
     const cap = document.getElementById("caption");
     if (cap) cap.style.opacity = shown ? "0" : "";
+
+    // glass description panel: drifts up with scroll, fully gone by DESC_END (~frame 188)
+    if (descPanel) {
+      if (p <= 0.005) {
+        descPanel.style.transform = "";
+        descPanel.style.opacity = "";
+      } else {
+        const t = Math.min(1, p / DESC_END);      // 0..1 across the panel's lifetime
+        // travel a bit more than its own height so it fully exits the top
+        const travel = descPanel.offsetHeight + 80;
+        descPanel.style.transform = "translate3d(0," + (-(t * travel)).toFixed(1) + "px,0)";
+        // fade out over the last 25% of its travel
+        const fade = t > 0.75 ? Math.max(0, 1 - (t - 0.75) / 0.25) : 1;
+        descPanel.style.opacity = fade.toFixed(3);
+      }
+    }
 
     if (progress() > 0.03) hint.style.opacity = "0";
     else hint.style.opacity = "";

@@ -25,21 +25,24 @@ body{
   min-height:100vh;
 }
 
-/* ---------- Layer 3: left description column ---------- */
+/* ---------- Layer 3: glass description panel (left, < half width) ---------- */
 .description{
   position:fixed;
-  top:0;left:0;bottom:0;
-  width:var(--col-w);
-  z-index:30;
-  padding:46px 30px 60px;
-  background:linear-gradient(180deg,#2c2418 0%,#1e1810 100%);
-  border-right:1px solid var(--panel-line);
+  top:0; left:0; bottom:0;
+  width:min(460px, 44vw);          /* less than half the screen */
+  z-index:40;
+  padding:52px 28px 60px 32px;
+  background:linear-gradient(180deg, rgba(44,36,24,.55) 0%, rgba(27,22,16,.45) 100%);
+  backdrop-filter:blur(16px) saturate(1.2);
+  -webkit-backdrop-filter:blur(16px) saturate(1.2);
+  border-right:1px solid rgba(240,236,226,.14);
   overflow-y:auto;
   scrollbar-width:thin;
-  scrollbar-color:#4a3b26 transparent;
+  scrollbar-color:#6b562f transparent;
+  will-change:transform,opacity;
 }
 .description::-webkit-scrollbar{width:8px}
-.description::-webkit-scrollbar-thumb{background:#4a3b26;border-radius:4px}
+.description::-webkit-scrollbar-thumb{background:#6b562f;border-radius:4px}
 
 .brand h1{
   font-size:1.9rem;
@@ -124,41 +127,38 @@ kbd{
   font-family:inherit;
 }
 
-/* ---------- Layer 2: stage (video) ---------- */
+/* ---------- Layer 2: fullscreen stage (video) ---------- */
 .stage{
   position:fixed;
-  top:0;left:var(--col-w);right:0;bottom:0;
+  inset:0;
   z-index:20;
-  display:flex;
-  align-items:center;
-  justify-content:center;
   background:radial-gradient(1100px 680px at 58% 42%, #2c2317 0%, #1b1610 72%);
-}
-.stage-inner{
-  position:relative;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:18px;
-  width:100%;
-  max-width:1180px;
-  padding:0 30px;
+  overflow:hidden;
 }
 .canvas-wrap{
-  position:relative;
-  width:100%;
-  max-width:1030px;
-  aspect-ratio:1728/1078;
+  position:absolute;
+  inset:0;
 }
 #frameCanvas{
   position:relative;
   z-index:2;
   width:100%;
   height:100%;
+  object-fit:cover;               /* fill the whole screen, crop a little */
   display:block;
-  border-radius:14px;
-  box-shadow:0 30px 80px rgba(0,0,0,.65);
-  pointer-events:none; /* let clicks reach the download button through the alpha tear */
+  pointer-events:none;            /* clicks reach the download button through the alpha tear */
+}
+.stage-bottom{
+  position:absolute;
+  left:50%;
+  bottom:26px;
+  transform:translateX(-50%);
+  z-index:15;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+  pointer-events:none;
 }
 
 /* ---------- Layer 1: download button behind canvas (revealed via alpha) ---------- */
@@ -171,13 +171,13 @@ kbd{
   flex-direction:column;
   align-items:center;
   gap:8px;
-  padding:34px 56px;
+  padding:38px 64px;
   border-radius:16px;
   text-decoration:none;
   color:#fdfaf3;
   background:linear-gradient(160deg,#8dc081 0%,#6f9e64 55%,#577f4d 100%);
   border:1px solid rgba(255,255,255,.22);
-  box-shadow:0 20px 60px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.3);
+  box-shadow:0 24px 70px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.3);
   opacity:0;
   transition:opacity .45s ease, transform .45s ease;
   pointer-events:none;
@@ -194,9 +194,10 @@ kbd{
   font-size:.78rem;
   letter-spacing:2px;
   text-transform:uppercase;
-  color:rgba(233,238,247,.55);
+  color:rgba(240,236,226,.6);
   animation:pulse 2.2s ease-in-out infinite;
   transition:opacity .5s;
+  text-shadow:0 1px 4px rgba(0,0,0,.8);
 }
 @keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
 .progress{
@@ -212,10 +213,11 @@ kbd{
 }
 .caption{
   font-size:.72rem;
-  color:rgba(169,180,196,.6);
+  color:rgba(240,236,226,.55);
   letter-spacing:.3px;
   text-align:center;
   transition:opacity .5s;
+  text-shadow:0 1px 4px rgba(0,0,0,.8);
 }
 
 /* ---------- follow gate modal ---------- */
@@ -339,16 +341,11 @@ kbd{
 
 /* ---------- responsive ---------- */
 @media (max-width:960px){
-  :root{--col-w:0px}
   .description{
-    position:relative;
-    width:100%;
-    height:auto;
-    border-right:none;
-    border-bottom:1px solid var(--panel-line);
-    padding:34px 22px 40px;
-    z-index:40;
+    width:min(340px, 86vw);
+    padding:40px 20px 40px 22px;
   }
-  .stage{position:relative;left:0;height:88vh}
+  .stage-bottom{bottom:14px}
   .scroll-hint{display:none}
+  #frameCanvas{object-fit:contain}
 }

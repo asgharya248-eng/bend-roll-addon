@@ -9,8 +9,26 @@
 </head>
 <body>
 
-<!-- Layer 3 (left column): English description -->
-<aside class="description">
+<!-- Layer 2 (fullscreen stage): scroll-driven frame sequence -->
+<main class="stage" id="stage">
+  <div class="canvas-wrap">
+    <!-- Layer 1 (behind canvas, revealed through alpha): download button -->
+    <a class="dl-behind" id="dlBehind" href="download/tut_bend_effect.zip" download="tut_bend_effect.zip">
+      <span class="dl-glyph">⬇</span>
+      <span class="dl-label">Download Addon</span>
+      <span class="dl-sub">tut_bend_effect.zip · 133 KB · Blender 5.2+</span>
+    </a>
+    <canvas id="frameCanvas" width="1728" height="1078"></canvas>
+  </div>
+  <div class="stage-bottom">
+    <div class="scroll-hint" id="scrollHint">▼ scroll to roll the screen ▼</div>
+    <div class="progress" title="Playback progress"><i id="progressBar"></i></div>
+    <div class="caption" id="caption">Keep scrolling — the screen rolls away to reveal the download</div>
+  </div>
+</main>
+
+<!-- Layer 3: glass description panel, left side, scrolls away by frame ~188 -->
+<aside class="description" id="descPanel">
   <header class="brand">
     <h1>Tut Bend <span>Effect</span></h1>
     <p class="tagline">Geometry Nodes Bend &amp; Roll — Blender Addon</p>
@@ -56,24 +74,6 @@
     <p>GPL-3.0-or-later. Free for personal and commercial use.</p>
   </section>
 </aside>
-
-<!-- Layer 2 (stage): scroll-driven frame sequence -->
-<main class="stage" id="stage">
-  <div class="stage-inner">
-    <div class="canvas-wrap">
-      <!-- Layer 1 (behind canvas, revealed through alpha): download button -->
-      <a class="dl-behind" id="dlBehind" href="download/tut_bend_effect.zip" download="tut_bend_effect.zip">
-        <span class="dl-glyph">⬇</span>
-        <span class="dl-label">Download Addon</span>
-        <span class="dl-sub">tut_bend_effect.zip · 133 KB · Blender 5.2+</span>
-      </a>
-      <canvas id="frameCanvas" width="1728" height="1078"></canvas>
-    </div>
-    <div class="scroll-hint" id="scrollHint">▼ scroll to roll the screen ▼</div>
-    <div class="progress" title="Playback progress"><i id="progressBar"></i></div>
-    <div class="caption" id="caption">Keep scrolling — the screen rolls away to reveal the download</div>
-  </div>
-</main>
 
 <!-- tall spacer: scrolling through it drives the video playback -->
 <div class="scroll-space" aria-hidden="true"></div>
