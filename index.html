@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tut Bend Effect — Geometry Nodes Bend &amp; Roll Addon for Blender</title>
+<meta name="description" content="Procedural bend and roll effect for any object in Blender, built entirely with Geometry Nodes. Scroll to play the preview, then download the addon.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Layer 3 (left column): English description -->
+<aside class="description">
+  <header class="brand">
+    <h1>Tut Bend <span>Effect</span></h1>
+    <p class="tagline">Geometry Nodes Bend &amp; Roll — Blender Addon</p>
+  </header>
+
+  <section class="block">
+    <h2>Overview</h2>
+    <p>Tut Bend Effect is a procedural bend and roll deformation built entirely with Geometry Nodes. It lets you bend, curl, and roll any object along a control path — meshes, curves, text, and more — fully non-destructively.</p>
+  </section>
+
+  <section class="block">
+    <h2>Key Features</h2>
+    <ul>
+      <li><strong>Bend &amp; Roll</strong> — curl any geometry along a NURBS control path with a rolling twist along the axis.</li>
+      <li><strong>100% Geometry Nodes</strong> — ships the exact node trees from the source <code>.blend</code>; every link and value is untouched.</li>
+      <li><strong>Non-destructive</strong> — applied as a modifier, so the original mesh never changes. Remove it anytime.</li>
+      <li><strong>Works on anything</strong> — mesh, curve, surface, meta, text, point cloud, volume, and grease pencil objects.</li>
+      <li><strong>Editable nodes</strong> — open the original node tree in the Geometry Nodes editor and tweak anything live.</li>
+    </ul>
+  </section>
+
+  <section class="block">
+    <h2>How to Use</h2>
+    <ol>
+      <li>Select an object in the 3D viewport.</li>
+      <li>Open the sidebar (<kbd>N</kbd>) and find the <strong>Tut Bend</strong> tab.</li>
+      <li>Click <strong>Add Tut Bend Effect</strong> — the modifier is added.</li>
+      <li>Edit the <em>NurbsPath</em> control object to shape the bend and roll.</li>
+      <li>Use <strong>Open Node Editor</strong> to expose and animate every parameter.</li>
+    </ol>
+  </section>
+
+  <section class="block">
+    <h2>Requirements</h2>
+    <ul>
+      <li>Blender 5.2 or newer</li>
+      <li>Installed as an extension (drag &amp; drop the ZIP, or Install from disk)</li>
+    </ul>
+  </section>
+
+  <section class="block">
+    <h2>License</h2>
+    <p>GPL-3.0-or-later. Free for personal and commercial use.</p>
+  </section>
+</aside>
+
+<!-- Layer 2 (stage): scroll-driven frame sequence -->
+<main class="stage" id="stage">
+  <div class="stage-inner">
+    <div class="canvas-wrap">
+      <!-- Layer 1 (behind canvas, revealed through alpha): download button -->
+      <a class="dl-behind" id="dlBehind" href="download/tut_bend_effect.zip" download="tut_bend_effect.zip">
+        <span class="dl-glyph">⬇</span>
+        <span class="dl-label">Download Addon</span>
+        <span class="dl-sub">tut_bend_effect.zip · 133 KB · Blender 5.2+</span>
+      </a>
+      <canvas id="frameCanvas" width="1728" height="1078"></canvas>
+    </div>
+    <div class="scroll-hint" id="scrollHint">▼ scroll to roll the screen ▼</div>
+    <div class="progress" title="Playback progress"><i id="progressBar"></i></div>
+    <div class="caption" id="caption">Keep scrolling — the screen rolls away to reveal the download</div>
+  </div>
+</main>
+
+<!-- tall spacer: scrolling through it drives the video playback -->
+<div class="scroll-space" aria-hidden="true"></div>
+
+<script src="script.js"></script>
+</body>
+</html>

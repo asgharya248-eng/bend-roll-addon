@@ -1,0 +1,6 @@
+# Local test artifacts
+server.log
+server.err
+__pycache__/
+*.pyc
+.opencode/
